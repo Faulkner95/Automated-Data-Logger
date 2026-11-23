@@ -12,11 +12,18 @@ DEVICE_ID = "ESP32_Node_1"
 # Serial Connection
 print(f"Connecting to ESP32 on {COM_PORT}...")
 
-ser = serial.Serial(
-    port=COM_PORT,
-    baudrate=BAUD_RATE,
-    timeout=1
-)
+try:
+    ser = serial.Serial(
+        port=COM_PORT,
+        baudrate=BAUD_RATE,
+        timeout=1
+    )
+
+except serial.SerialException as e:
+    print(f"\nSERIAL ERROR: {e}")
+    print("Check the COM port and USB connection.")
+    print("Make sure Thonny is disconnected.")
+    raise SystemExit(1)
 
 print("Serial connection established!")
 
