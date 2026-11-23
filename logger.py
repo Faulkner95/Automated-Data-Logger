@@ -20,6 +20,28 @@ ser = serial.Serial(
 
 print("Serial connection established!")
 
+# Initialize CSV file
+write_header = (
+    not os.path.exists(CSV_FILENAME)
+    or os.path.getsize(CSV_FILENAME) == 0
+)
+
+if write_header:
+    with open(
+        CSV_FILENAME,
+        mode="a",
+        newline="",
+        encoding="utf-8"
+    ) as file:
+
+        csv_writer = csv.writer(file)
+
+        csv_writer.writerow([
+            "Timestamp",
+            "Device_ID",
+            "Temperature_F"
+        ])
+
 try:
     while True:
 
@@ -32,7 +54,7 @@ try:
         if not raw_data:
             continue
 
-        # Validate temperature reading
+        # Validate and convert the received data to float
         try:
             temperature = float(raw_data)
 
@@ -43,9 +65,9 @@ try:
         # Display received temperature
         print(f"Received: {temperature:.2f} F")
 
-# ==========================================
+
 # ERROR HANDLING
-# ==========================================
+
 
 except KeyboardInterrupt:
     print("\nData collection stopped.")
