@@ -4,7 +4,7 @@ import os
 from datetime import datetime
 
 # Configuration
-COM_PORT = "/dev/ttyUSB0"
+COM_PORT = "/dev/ttyUSB1"
 BAUD_RATE = 115200
 CSV_FILENAME = "sensor_data.csv"
 DEVICE_ID = "ESP32_Node_1"
@@ -19,3 +19,17 @@ ser = serial.Serial(
 )
 
 print("Serial connection established!")
+
+try:
+    while True:
+        raw_data = ser.readline().decode("utf-8").strip()
+
+        if raw_data:
+            print(f"Received: {raw_data}")
+
+except KeyboardInterrupt:
+    print("\nData collection stopped.")
+
+finally:
+    ser.close()
+    print("Serial connection closed.")
