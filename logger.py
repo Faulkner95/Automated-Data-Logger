@@ -22,10 +22,30 @@ print("Serial connection established!")
 
 try:
     while True:
-        raw_data = ser.readline().decode("utf-8").strip()
 
-        if raw_data:
-            print(f"Received: {raw_data}")
+        # Read incoming serial data
+        raw_data = ser.readline().decode(
+            "utf-8",
+            errors="ignore"
+        ).strip()
+
+        if not raw_data:
+            continue
+
+        # Validate temperature reading
+        try:
+            temperature = float(raw_data)
+
+        except ValueError:
+            print(f"Ignored: {raw_data}")
+            continue
+
+        # Display received temperature
+        print(f"Received: {temperature:.2f} F")
+
+# ==========================================
+# ERROR HANDLING
+# ==========================================
 
 except KeyboardInterrupt:
     print("\nData collection stopped.")
