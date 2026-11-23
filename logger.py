@@ -83,6 +83,8 @@ try:
                 temperature
             ])
 
+            file.flush()
+
 
 # ERROR HANDLING
 
