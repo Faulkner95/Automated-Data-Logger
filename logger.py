@@ -67,9 +67,24 @@ try:
 
         print(f"[{current_time}] Received: {temperature:.2f} F")
 
+        # Append reading to CSV
+        with open(
+            CSV_FILENAME,
+            mode="a",
+            newline="",
+            encoding="utf-8"
+        ) as file:
+
+            csv_writer = csv.writer(file)
+
+            csv_writer.writerow([
+                current_time,
+                DEVICE_ID,
+                temperature
+            ])
+
 
 # ERROR HANDLING
-
 
 except KeyboardInterrupt:
     print("\nData collection stopped.")
