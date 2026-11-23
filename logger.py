@@ -63,7 +63,9 @@ try:
             continue
 
         # Display received temperature
-        print(f"Received: {temperature:.2f} F")
+        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        print(f"[{current_time}] Received: {temperature:.2f} F")
 
 
 # ERROR HANDLING
